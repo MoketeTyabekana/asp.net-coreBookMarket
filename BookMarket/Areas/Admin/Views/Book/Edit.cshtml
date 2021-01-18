@@ -1,0 +1,177 @@
+﻿
+
+@model BookMarket.Models.Books
+@{
+    ViewData["Title"] = "Edit";
+}
+<br />
+
+<h2 class="text-info">Edit Book</h2>
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <div class="p-4 rounded border row">
+        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+        </div>
+        <div class="col-8">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Title"></label>
+                </div>
+                <div class="col-8">
+                    <input type="hidden" asp-for="Id" />
+                    <input asp-for="Title" class="form-control" />
+                </div>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Author"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Author" class="form-control" />
+                </div>
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="ISBN"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="ISBN" class="form-control" />
+                </div>
+                <span asp-validation-for="ISBN" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Edition"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Edition" class="form-control" />
+                </div>
+                <span asp-validation-for="Edition" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Description"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Description" class="form-control" />
+                </div>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="YearPublished"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="YearPublished" class="form-control" />
+                </div>
+                <span asp-validation-for="YearPublished" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Price"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Price" class="form-control" />
+                </div>
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Image"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Image" class="form-control" type="file" />
+                </div>
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Condition"></label>
+                </div>
+                <div class="col-8">
+                    <textarea asp-for="Condition" class="form-control"></textarea>
+                </div>
+                <span asp-validation-for="Condition" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="IsAvailable"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="IsAvailable" class="" type="checkbox" />
+                </div>
+                <span asp-validation-for="IsAvailable" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="CategoryId"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="CategoryId" asp-items="ViewBag.categoryId" class="form-control"></select>
+                    @*<input asp-for="ProductTypeId" class="form-control" />*@
+                </div>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="TagNameId"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="TagNameId" asp-items="ViewBag.TagNameId" class="form-control"></select>
+                    @*<input asp-for="SpecialTagId" class="form-control" />*@
+                </div>
+                <span asp-validation-for="TagNameId" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Update" />
+                <a asp-action="Index" class="btn btn-success">Back to List</a>
+            </div>
+
+
+        </div>
+        <div class="col-1">
+            <div class="col-3">
+                <img src="~/@Model.Image" width="350" height="600" style="border-radius: 5px; border: 1px solid #efefef" />
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+</form>
+
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+
+    $.validator.methods.range = function (value, element, param) {
+        var globalizedValue = value.replace(",", ".");
+        return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
+    }
+
+    $.validator.methods.number = function (value, element) {
+        return this.optional(element) || /-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+    }
+    //Date dd/MM/yyyy
+    $.validator.methods.date = function (value, element) {
+        var date = value.split("/");
+        return this.optional(element) || !/Invalid|NaN/.test(new Date(date[2], date[1], date[0]).toString());
+    }
+    </script>
+}
+
+
+
+
+
+
+

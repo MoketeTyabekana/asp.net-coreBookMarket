@@ -1,0 +1,52 @@
+﻿@model BookMarket.Models.RentApplications
+
+@{
+    ViewData["Title"] = "Rent";
+}
+
+<h4>Apply to rent here</h4>
+
+<hr />
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Rent">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="NextOfKinContacts" class="control-label"></label>
+                <input asp-for="NextOfKinContacts" class="form-control" />
+                <span asp-validation-for="NextOfKinContacts" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ProofOfAddress" class="control-label"></label>
+                <input asp-for="ProofOfAddress" type="file" />
+                <span asp-validation-for="ProofOfAddress" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ProofOfID" class="control-label"></label>
+                <input asp-for="ProofOfID" type="file" />
+                <span asp-validation-for="ProofOfID" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NextOfKinId" class="control-label"></label>
+                <input asp-for="NextOfKinId"  type="file" />
+                <span asp-validation-for="NextOfKinId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Submit Application" class="btn btn-primary" />
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Home" asp-action="Index">Return to Home</a>
+</div>
+
