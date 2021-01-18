@@ -7,8 +7,14 @@
 }
 <br />
 
-<h2 class="text-info">Send your application</h2>
-
+<h2 class="text-info">Attach the neccessary documents and submit your application.</h2>
+<br />
+<h5>
+    Why we need the following documents.
+</h5>
+<p>
+    We understand that this is sensitive but for security reasons we going to need your proof of address as you will be in position of our belonging, agreement made is for renting and the book has to return back should it happen that we do not get the book in time and don’t know your whereabouts we will be able to access your address stored on our database.
+</p>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Rent">
@@ -16,7 +22,7 @@
 
             <div class="form-group">
                 <label asp-for="ProofOfAddress" class="control-label"></label>
-                <input asp-for="ProofOfAddress"  />
+                <input asp-for="ProofOfID" type="file" />
                 <span asp-validation-for="ProofOfAddress" class="text-danger"></span>
             </div>
 
