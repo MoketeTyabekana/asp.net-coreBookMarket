@@ -85,10 +85,13 @@ namespace BookMarket.Areas.Customer.Controllers
                 foreach (var book in books)
                 {
                     orderDetails.BookId = book.Id;
+                    orderDetails.UserId = _userManager.GetUserId(User);
                     anOrder.OrderDetails.Add(orderDetails);
                 }
             }
-            orderDetails.UserId = _userManager.GetUserId(User);
+
+            anOrder.OrderDate = DateTime.Now;
+
             anOrder.OrderNo = GetOrderNo();
             _db.Order.Add(anOrder);
             await _db.SaveChangesAsync();

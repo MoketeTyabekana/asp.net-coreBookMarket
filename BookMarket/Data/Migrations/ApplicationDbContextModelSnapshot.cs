@@ -79,6 +79,67 @@ namespace BookMarket.Data.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("BookMarket.Models.MyBookDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("MyBookId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MyBookId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MyBookDetails");
+                });
+
+            modelBuilder.Entity("BookMarket.Models.MyBooks", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Author")
+                        .IsRequired();
+
+                    b.Property<int>("CategoryId");
+
+                    b.Property<string>("Condition")
+                        .IsRequired();
+
+                    b.Property<string>("Description")
+                        .IsRequired();
+
+                    b.Property<string>("Edition")
+                        .IsRequired();
+
+                    b.Property<string>("ISBN")
+                        .IsRequired();
+
+                    b.Property<string>("Image");
+
+                    b.Property<bool>("IsAvailable");
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<string>("Title")
+                        .IsRequired();
+
+                    b.Property<string>("YearPublished")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("MyBooks");
+                });
+
             modelBuilder.Entity("BookMarket.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -117,7 +178,7 @@ namespace BookMarket.Data.Migrations
                     b.ToTable("OrderDetails");
                 });
 
-            modelBuilder.Entity("BookMarket.Models.RentApplications", b =>
+            modelBuilder.Entity("BookMarket.Models.RentApplication", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -135,26 +196,88 @@ namespace BookMarket.Data.Migrations
                     b.Property<string>("ProofOfID")
                         .IsRequired();
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("Status")
                         .IsRequired();
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("RentApplications");
+                    b.ToTable("RentApplication");
                 });
 
-            modelBuilder.Entity("BookMarket.Models.SellApplications", b =>
+            modelBuilder.Entity("BookMarket.Models.RentApplicationDetails", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ProofOfAddress")
+                    b.Property<string>("Reason");
+
+                    b.Property<int>("RentApplicationId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RentApplicationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RentApplicationDetails");
+                });
+
+            modelBuilder.Entity("BookMarket.Models.RentOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("OrderDate");
+
+                    b.Property<string>("OrderNo");
+
+                    b.Property<DateTime>("ReturnDate");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RentOrder");
+                });
+
+            modelBuilder.Entity("BookMarket.Models.RentOrderDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BookId");
+
+                    b.Property<int>("OrderId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RentOrderDetails");
+                });
+
+            modelBuilder.Entity("BookMarket.Models.Requests", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Edition")
                         .IsRequired();
 
-                    b.Property<string>("ProofOfID")
+                    b.Property<string>("ISBN")
+                        .IsRequired();
+
+                    b.Property<string>("Title")
                         .IsRequired();
 
                     b.Property<string>("UserId")
@@ -164,7 +287,48 @@ namespace BookMarket.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("SellApplications");
+                    b.ToTable("Requests");
+                });
+
+            modelBuilder.Entity("BookMarket.Models.SellApplication", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ProofAddress")
+                        .IsRequired();
+
+                    b.Property<string>("ProofId")
+                        .IsRequired();
+
+                    b.Property<string>("Status")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SellApplication");
+                });
+
+            modelBuilder.Entity("BookMarket.Models.SellApplicationDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Reason");
+
+                    b.Property<int>("SellApplicationId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SellApplicationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SellApplicationDetails");
                 });
 
             modelBuilder.Entity("BookMarket.Models.TagNames", b =>
@@ -389,6 +553,26 @@ namespace BookMarket.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("BookMarket.Models.MyBookDetails", b =>
+                {
+                    b.HasOne("BookMarket.Models.MyBooks", "MyBook")
+                        .WithMany("MyBookDetails")
+                        .HasForeignKey("MyBookId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BookMarket.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("BookMarket.Models.MyBooks", b =>
+                {
+                    b.HasOne("BookMarket.Models.Categories", "Categories")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("BookMarket.Models.OrderDetails", b =>
                 {
                     b.HasOne("BookMarket.Models.Books", "Book")
@@ -406,7 +590,36 @@ namespace BookMarket.Data.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("BookMarket.Models.RentApplications", b =>
+            modelBuilder.Entity("BookMarket.Models.RentApplicationDetails", b =>
+                {
+                    b.HasOne("BookMarket.Models.RentApplication", "RentApplication")
+                        .WithMany("RentApplicationDetails")
+                        .HasForeignKey("RentApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BookMarket.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("BookMarket.Models.RentOrderDetails", b =>
+                {
+                    b.HasOne("BookMarket.Models.Books", "Book")
+                        .WithMany()
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BookMarket.Models.RentOrder", "Order")
+                        .WithMany("RentOrderDetails")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BookMarket.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("BookMarket.Models.Requests", b =>
                 {
                     b.HasOne("BookMarket.Models.ApplicationUser", "User")
                         .WithMany()
@@ -414,12 +627,16 @@ namespace BookMarket.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("BookMarket.Models.SellApplications", b =>
+            modelBuilder.Entity("BookMarket.Models.SellApplicationDetails", b =>
                 {
+                    b.HasOne("BookMarket.Models.SellApplication", "SellApplication")
+                        .WithMany("SellApplicationDetails")
+                        .HasForeignKey("SellApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("BookMarket.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

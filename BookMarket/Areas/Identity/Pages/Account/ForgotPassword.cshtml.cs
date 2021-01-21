@@ -4,11 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using BookMarket.Models;
+using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using MimeKit;
 
 namespace BookMarket.Areas.Identity.Pages.Account
 {
@@ -39,11 +41,11 @@ namespace BookMarket.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(Input.Email);
-                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
-                {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return RedirectToPage("./ForgotPasswordConfirmation");
-                }
+                //if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                //{
+                //    // Don't reveal that the user does not exist or is not confirmed
+                //    return RedirectToPage("./ForgotPasswordConfirmation");
+                //}
 
                 // For more information on how to enable account confirmation and password reset please 
                 // visit https://go.microsoft.com/fwlink/?LinkID=532713
@@ -54,10 +56,23 @@ namespace BookMarket.Areas.Identity.Pages.Account
                     values: new { code },
                     protocol: Request.Scheme);
 
-                await _emailSender.SendEmailAsync(
-                    Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("Book Market", "2021bookmarket@gmail.com"));
+                message.To.Add(new MailboxAddress(user.Name, Input.Email));
+                message.Subject = "Reset your password";
+                message.Body = new TextPart("plain")
+                {
+                    Text = "Please reset your password by clicking on the link: " + callbackUrl
+                };
+                using (var client = new SmtpClient())
+                {
+                    client.Connect("smtp.gmail.com", 587, false);
+                    client.Authenticate("2021bookmarket@gmail.com", "bookmarket");
+                    client.Send(message);
+                    client.Disconnect(true);
+                }
+
+                
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }

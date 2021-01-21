@@ -108,16 +108,16 @@ namespace BookMarket.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (image != null)
+                if (image == null)
+                {
+                    book.Image = book.Image;
+                }
+                else
+
                 {
                     var name = Path.Combine(_he.WebRootPath + "/images", Path.GetFileName(image.FileName));
                     await image.CopyToAsync(new FileStream(name, FileMode.Create));
                     book.Image = "images/" + image.FileName;
-                }
-                else
-               
-                {
-                    book.Image = "Images/noimage.PNG";
                 }
                 _db.Books.Update(book);
                 await _db.SaveChangesAsync();

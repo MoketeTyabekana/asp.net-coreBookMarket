@@ -1,0 +1,140 @@
+﻿
+@using BookMarket.Models;
+@model IEnumerable<MyBookDetails>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<br /><br />
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-info"> My Books</h2>
+    </div>
+    <div class="col-6 text-right">
+        <a asp-action="Create" class="btn btn-info"><i class="fas fa-plus"></i>&nbsp;Add New Book</a>
+    </div>
+</div>
+<form method="post">
+    <div class="row">
+        <div class="col-3">
+            <input type="number" class="form-control" name="lowAmount" />
+        </div>
+        <div class="col-3">
+            <input type="number" class="form-control" name="largeAmount" />
+        </div>
+        <div class="col-3">
+            <input type="submit" value="Search" class="btn btn-success" />
+        </div>
+        <div class="col-3"></div>
+        <div class="col-3"></div>
+    </div>
+</form>
+<br />
+<div>
+    <table class="table table-striped border" id="myTable">
+        <thead>
+            <tr class="table-info">
+                <th>
+                    @Html.DisplayNameFor(c => c.MyBook.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(c => c.MyBook.Author)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(c => c.MyBook.ISBN)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(c => c.MyBook.Edition)
+                </th>
+               
+                <th>
+                    @Html.DisplayNameFor(c => c.MyBook.YearPublished)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(c => c.MyBook.Price)
+                </th>
+
+                @*<th>
+                    @Html.DisplayNameFor(c => c.Condition)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(c => c.MyBook.IsAvailable)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(c => c.MyBook.CategoryId)
+                </th>
+               
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.MyBook.Title</td>
+                    <td>@item.MyBook.Author</td>
+                    <td>@item.MyBook.ISBN</td>
+                    <td>@item.MyBook.Edition</td>
+                    @*<td>@item.Description</td>*@
+                    <td>@item.MyBook.YearPublished</td>
+                    <td>@item.MyBook.Price</td>
+                    @*<td>@item.Condition</td>*@
+                    <td>@item.MyBook.IsAvailable</td>
+                    <td>@item.MyBook.Categories.Category</td>
+                   
+
+                    <td>
+                        <partial name="_ButtonPartial" model="@item.Id" />
+                    </td>
+                </tr>
+
+
+
+
+            }
+             </tbody>
+</table>
+</div>
+
+@section scripts{
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+        $(function () {
+            var save = '@TempData["save"]'
+            if (save !='') {
+                alertify.success(save);
+            }
+        })
+
+         $(function () {
+            var remove = '@TempData["remove"]'
+            if (remove != '') {
+                alertify.error(remove);
+            }
+
+
+        })
+
+          $(function () {
+            var update = '@TempData["update"]'
+              if (update != '') {
+                  alertify.success(update);
+            }
+
+
+        })
+    </script>
+}
+
+
+

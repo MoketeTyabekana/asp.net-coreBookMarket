@@ -1,0 +1,66 @@
+﻿
+@model BookMarket.Models.SellApplicationDetails
+@{
+    ViewData["Title"] = "Accept";
+}
+<br />
+
+<h2 class="text-info">Accept Application</h2>
+<form asp-action="Accept" method="post">
+    @Html.HiddenFor(c => c.SellApplication.ProofAddress)
+    @Html.HiddenFor(z => z.SellApplication.ProofId)
+    @Html.HiddenFor(c => c.UserId)
+   
+    <div class="p-4 rounded border">
+        <input type="hidden" asp-for="Id" />
+
+        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+        </div>
+        <input type="hidden" asp-for="SellApplication.ProofAddress" />
+        <input type="hidden" asp-for="SellApplication.ProofId" />
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="SellApplicationId"></label> ID
+            </div>
+            <div class="col-5">
+                <input asp-for="SellApplicationId" readonly="readonly" class="form-control" />
+            </div>
+            <span asp-validation-for="SellApplicationId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="User.Email"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="User.Email" readonly="readonly" class="form-control" />
+            </div>
+            <span asp-validation-for="User.Email" class="text-danger"></span>
+        </div>
+
+
+        <h3> Do you want to accept this application?</h3>
+        <div class="form-group">
+            <input type="submit" class="btn btn-success" value="Accept" />
+            <a asp-action="Index" class="btn btn-primary">Back to List</a>
+        </div>
+    </div>
+
+</form>
+
+@section Scripts{
+
+    @{
+            /**/
+
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+
+
+
+
+

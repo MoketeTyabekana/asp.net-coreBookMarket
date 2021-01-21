@@ -25,7 +25,7 @@ namespace BookMarket.Areas.Customer.Controllers
             return View(_db.ApplicationUsers.ToList());
         }
 
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             return View();
         }

@@ -1,0 +1,134 @@
+﻿
+@model BookMarket.Models.ApplicationUser
+@{
+    ViewData["Title"] = "Confirm";
+}
+<br />
+<h2 class="text-info"> Delivery Address</h2>
+<form asp-action="Edit" method="post" id="user-form" enctype="multipart/form-data">
+    <div class="p-4 rounded border">
+        <div asp-validation-summary="ModelOnly" class="text-danger">
+        </div>
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
+        <h3>@ViewBag.message</h3>
+        <div class="form-group row">
+            <div class="col-5">
+                <h3> <label>User Information</label></h3>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Name"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Name" class="form-control" />
+            </div>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Surname"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Surname" class="form-control" />
+            </div>
+            <span asp-validation-for="Surname" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="PhoneNumber"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="PhoneNumber" class="form-control" />
+            </div>
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-5">
+                <h3> <label>Address</label></h3>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="StreetAddress"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="StreetAddress" class="form-control" />
+            </div>
+            <span asp-validation-for="StreetAddress" class="text-danger"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Suburb"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Suburb" class="form-control" />
+            </div>
+            <span asp-validation-for="Suburb" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Complex"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Complex" class="form-control" />
+            </div>
+            <span asp-validation-for="Complex" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="City"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="City" class="form-control" />
+            </div>
+            <span asp-validation-for="City" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Province"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Province" class="form-control" />
+            </div>
+            <span asp-validation-for="Province" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="PostalCode"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="PostalCode" class="form-control" />
+            </div>
+            <span asp-validation-for="PostalCode" class="text-danger"></span>
+        </div>
+        <div class="form-group"> <input type="submit" class="btn btn-success" value="Save" /></div>
+        <div class="form-group float-right">
+
+            <a asp-area="Customer" asp-action="CheckOut" asp-controller="RentOrder" class="btn btn-info">Proceed to Checkout</a>
+
+        </div>
+    </div>
+</form>
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+    $(document).ready(function () {
+            $("#user-form").validate({
+                rules: {
+                    UserName: {
+                        required: true,
+                    },
+                    PasswordHash: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    UserName: "Enter your email",
+                    PasswordHash: "Enter your password"
+                }
+
+            });
+        });</script>
+}

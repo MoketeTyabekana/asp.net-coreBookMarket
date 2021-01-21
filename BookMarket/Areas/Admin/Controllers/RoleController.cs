@@ -48,6 +48,7 @@ namespace BookMarket.Areas.Admin.Controllers
                 ViewBag.name = name;
                 return View();
             }
+
             var result = await _roleManager.UpdateAsync(role);
             if(result.Succeeded)
             {
@@ -141,14 +142,18 @@ namespace BookMarket.Areas.Admin.Controllers
         {
             var user = _db.ApplicationUsers.FirstOrDefault(c => c.Id == roleUser.UserId);
             var isCheckRoleAssign =await _userManager.IsInRoleAsync(user, roleUser.RoleId);
-            if(isCheckRoleAssign)
+            
+            if (isCheckRoleAssign)
             {
                 ViewBag.mgs = "User is already assigned this role.";
                 ViewData["UserId"] = new SelectList(_db.ApplicationUsers.Where(f => f.LockoutEnd < DateTime.Now || f.LockoutEnd == null).ToList(), "Id", "UserName");
                 ViewData["RoleId"] = new SelectList(_roleManager.Roles.ToList(), "Name", "Name");
                 return View();
             }
+          
+            var remove = await _userManager.RemoveFromRoleAsync(user, "Customer");
             var role = await _userManager.AddToRoleAsync(user,roleUser.RoleId);
+
             if(role.Succeeded)
             {
                 TempData["save"] = "User Role assigned.";

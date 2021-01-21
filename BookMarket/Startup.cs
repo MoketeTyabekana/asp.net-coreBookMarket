@@ -14,7 +14,6 @@ using BookMarket.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BookMarket.Models;
-using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace BookMarket
 {
@@ -36,8 +35,7 @@ namespace BookMarket
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddSession(options => 
-            
+            services.AddSession(options =>
             {
                 // Set a short timeout for easy testing.
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -45,7 +43,6 @@ namespace BookMarket
                 // Make the session cookie essential
                 options.Cookie.IsEssential = true;
             });
-           
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
@@ -60,8 +57,6 @@ namespace BookMarket
             services.AddSession();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
-
-        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

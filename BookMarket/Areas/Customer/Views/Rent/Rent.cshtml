@@ -1,4 +1,4 @@
-﻿@model BookMarket.Models.RentApplications
+﻿@model BookMarket.Models.RentApplication
 
 @{
     ViewData["Title"] = "Rent";
@@ -22,19 +22,19 @@
 
             <div class="form-group">
                 <label asp-for="ProofOfAddress" class="control-label"></label>
-                <input asp-for="ProofOfAddress" type="file" />
+                <input asp-for="ProofOfAddress" class="form-control" type="file" />
                 <span asp-validation-for="ProofOfAddress" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="ProofOfID" class="control-label"></label>
-                <input asp-for="ProofOfID" type="file" />
+                <input asp-for="ProofOfID" class="form-control" type="file" />
                 <span asp-validation-for="ProofOfID" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="NextOfKinId" class="control-label"></label>
-                <input asp-for="NextOfKinId"  type="file" />
+                <input asp-for="NextOfKinId" class="form-control" type="file" />
                 <span asp-validation-for="NextOfKinId" class="text-danger"></span>
             </div>
 
@@ -42,7 +42,6 @@
                 <input type="submit" value="Submit Application" class="btn btn-primary" />
             </div>
         </form>
-
     </div>
 </div>
 

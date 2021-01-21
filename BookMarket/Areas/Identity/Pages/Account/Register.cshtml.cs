@@ -95,6 +95,22 @@ namespace BookMarket.Areas.Identity.Pages.Account
                         values: new { userId = user.Id, code = code },
                         protocol: Request.Scheme);
 
+                    var message = new MimeMessage();
+                    message.From.Add(new MailboxAddress("Book Market", "2021bookmarket@gmail.com"));
+                    message.To.Add(new MailboxAddress(user.Name, Input.Email));
+                    message.Subject = "Confirm your email";
+                    message.Body = new TextPart("plain")
+                    {
+                        Text = "Please confirm your account by by clicking on the link: " + callbackUrl
+                    };
+                    using (var client = new SmtpClient())
+                    {
+                        client.Connect("smtp.gmail.com", 587, false);
+                        client.Authenticate("2021bookmarket@gmail.com", "bookmarket");
+                        client.Send(message);
+                        client.Disconnect(true);
+                    }
+
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 

@@ -1,0 +1,166 @@
+﻿
+
+@model BookMarket.Models.MyBookDetails
+@{
+    ViewData["Title"] = "Details";
+}
+
+<br />
+
+<h2 class="text-info"> My Book Details</h2>
+<form asp-action="" method="post" enctype="multipart/form-data">
+    <div class="p-4 rounded border row">
+        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+        </div>
+        <div class="col-8">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MyBook.Title"></label>
+                </div>
+                <div class="col-8">
+                    <input type="hidden" asp-for="Id" />
+                    <input asp-for="MyBook.Title" readonly="readonly" class="form-control" />
+                </div>
+                <span asp-validation-for="MyBook.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MyBook.Author"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="MyBook.Author" readonly="readonly" class="form-control" />
+                </div>
+                <span asp-validation-for="MyBook.Author" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MyBook.ISBN"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="MyBook.ISBN" readonly="readonly" class="form-control" />
+                </div>
+                <span asp-validation-for="MyBook.ISBN" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MyBook.Edition"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="MyBook.Edition" readonly="readonly" class="form-control" />
+                </div>
+                <span asp-validation-for="MyBook.Edition" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MyBook.Description"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="MyBook.Description" readonly="readonly" class="form-control" />
+                </div>
+                <span asp-validation-for="MyBook.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MyBook.YearPublished"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="MyBook.YearPublished" readonly="readonly" class="form-control" />
+                </div>
+                <span asp-validation-for="MyBook.YearPublished" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MyBook.Price"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="MyBook.Price" readonly="readonly" class="form-control" />
+                </div>
+                <span asp-validation-for="MyBook.Price" class="text-danger"></span>
+            </div>
+            @*<div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Image"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Image" readonly="readonly" class="form-control" type="file" />
+                    </div>
+                    <span asp-validation-for="Image" class="text-danger"></span>
+                </div>*@
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MyBook.Condition"></label>
+                </div>
+                <div class="col-8">
+                    <textarea asp-for="MyBook.Condition" readonly="readonly" class="form-control"></textarea>
+                </div>
+                <span asp-validation-for="MyBook.Condition" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MyBook.IsAvailable"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="MyBook.IsAvailable" readonly="readonly" class="" type="checkbox" />
+                </div>
+                <span asp-validation-for="MyBook.IsAvailable" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="MyBook.CategoryId"></label>
+                </div>
+                <div class="col-8">
+                    @*<select asp-for="ProductTypeId" readonly="readonly" asp-items="ViewBag.productTypeId" class="form-control"></select>*@
+                    <input asp-for="MyBook.CategoryId" readonly="readonly" class="form-control" />
+                    @*<input asp-for="ProductTypeId" class="form-control" />*@
+                </div>
+                <span asp-validation-for="MyBook.CategoryId" class="text-danger"></span>
+            </div>
+           
+
+
+            <div class="form-group">
+                <input type="submit" asp-action="Edit" asp-route-id="@Model.Id"  class="btn btn-primary" value="Edit" />
+                <a asp-action="Index" class="btn btn-success">Back to List</a>
+            </div>
+
+
+        </div>
+        <div class="col-1">
+            <div class="col-3">
+                <img src="~/@Model.MyBook.Image" width="350" height="600" style="border-radius: 5px; border: 1px solid #efefef" />
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+</form>
+
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+
+    $.validator.methods.range = function (value, element, param) {
+        var globalizedValue = value.replace(",", ".");
+        return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
+    }
+
+    $.validator.methods.number = function (value, element) {
+        return this.optional(element) || /-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+    }
+    
+    </script>
+}
+
+
+
+
+
+
+

@@ -1,0 +1,197 @@
+﻿@model BookMarket.Models.RentOrder
+@using BookMarket.Utility
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Rental Details";
+}
+@{
+
+    List<MyBooks> books = HttpContextAccessor.HttpContext.Session.Get<List<MyBooks>>("mybooks");
+
+
+    if (books == null)
+    {
+        books = new List<MyBooks>();
+    }
+
+
+}
+
+<br />
+<h2 class="text-info">Rental Order Summary</h2>
+<form asp-action="" method="post" enctype="multipart/form-data">
+    <div class="p-4 rounded border row">
+        <div asp-validation-summary="ModelOnly" class="text-danger">
+        </div>
+
+        <div class="col-6">
+            <div class="form-group row">
+                <div class="col-4">
+                    <h3> <label>Order Information</label></h3>
+                </div>
+            </div>
+            @*<div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Name"></label>
+                    </div>
+                    <div class="col-8">
+
+                        <input asp-for="Name" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Surname"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Surname" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="Surname" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="PhoneNo"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="PhoneNo" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="PhoneNo" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <h3> <label>Address</label></h3>
+                    </div>
+                </div>
+
+
+
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="StreetAddress"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="StreetAddress" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="StreetAddress" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Suburb"></label>
+                    </div>
+                    <div class="col-8">
+
+                        <input asp-for="Suburb" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="Suburb" class="text-danger"></span>
+                    </div>
+
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Complex"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Complex" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="Complex" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="City"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="City" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Province"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Province" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="Province" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="PostalCode"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="PostalCode" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="PostalCode" class="text-danger"></span>
+                    </div>
+
+                </div>*@
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="OrderDate"></label>
+                </div>
+                <div class="col-8">
+                    @*<select asp-for="SpecialTagId" asp-items="ViewBag.TagId" class="form-control"></select>*@
+                    <input asp-for="OrderDate" id="today" type="text" readonly="readonly" class="form-control" />
+                    <span asp-validation-for="OrderDate" class="text-danger"></span>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group row">
+                <div class="col-8">
+                    <h3> <label>Cart Information</label></h3>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in books)
+                    {
+                        <tr>
+                            <td>
+                                <img src="~/@item.Image" height="100px" width="150px" />
+                            </td>
+                            <td>@item.Title</td>
+                            <td>R @item.Price</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="text-right">
+                <h3>Total Price :R @books.Sum(c => c.Price)</h3>
+            </div>
+
+        </div>
+        <div class="form-group float-sm-right">
+            <input type="submit" value="Place Order" class="btn btn-success" />
+        </div>
+    </div>
+</form>
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        let today = new Date().toISOString().substr(0, 10);
+        document.querySelector("#today").value = today;
+
+        // or...
+
+        document.querySelector("#today").valueAsDate = new Date();
+    </script>
+
+}
+

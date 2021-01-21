@@ -1,49 +1,49 @@
 ﻿
-
-@model BookMarket.Models.SellApplications
-
+@model BookMarket.Models.SellApplication
 @{
     ViewData["Title"] = "Apply";
 }
 <br />
 
-<h2 class="text-info">Attach the neccessary documents and submit your application.</h2>
-<br />
-<h5>
-    Why we need the following documents.
-</h5>
-<p>
-    We understand that this is sensitive but for security reasons we going to need your proof of address as you will be in position of our belonging, agreement made is for renting and the book has to return back should it happen that we do not get the book in time and don’t know your whereabouts we will be able to access your address stored on our database.
-</p>
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Rent">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<h2 class="text-info">Send your application</h2>
+<form asp-action="Apply" method="post">
+  
+    <div class="p-4 rounded border">
+        <div asp-validation-summary="ModelOnly" class="text-danger">
 
-            <div class="form-group">
-                <label asp-for="ProofOfAddress" class="control-label"></label>
-                <input asp-for="ProofOfID" type="file" />
-                <span asp-validation-for="ProofOfAddress" class="text-danger"></span>
-            </div>
+        </div>
+        <h3>@ViewBag.message</h3>
 
-            <div class="form-group">
-                <label asp-for="ProofOfID" class="control-label"></label>
-                <input asp-for="ProofOfID"  type="file" />
-                <span asp-validation-for="ProofOfID" class="text-danger"></span>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="ProofAddress"></label>
             </div>
-
-            <div class="form-group">
-                <input type="submit" value="Submit Application" class="btn btn-primary" />
+            <div class="col-5">
+                <input asp-for="ProofAddress" type="file" class="form-control" />
             </div>
-        </form>
+            <span asp-validation-for="ProofAddress" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="ProofId"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="ProofId" type="file" class="form-control" />
+            </div>
+            <span asp-validation-for="ProofId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Submit Application" />
+            <a asp-action="Terms" class="btn btn-success">Back</a>
+        </div>
     </div>
-</div>
+
+</form>
 
 @section Scripts{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-
 
 
 

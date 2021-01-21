@@ -4,14 +4,14 @@
 @model X.PagedList.IPagedList<Books>
 
 
-@{
+    @{
     ViewData["Title"] = "Home Page";
-}
-<br /><br />
+    }
+    <br /><br />
 
-<div class="row">
-    @foreach (var book in Model)
-    {
+    <div class="row">
+        @foreach (var book in Model)
+        {
         <div class="col-4">
             <div class="card mb-4">
                 <div class="card-header">
@@ -30,30 +30,30 @@
                 </div>
             </div>
         </div>
-    }
-</div>
-<div>
-    @Html.PagedListPager(Model, c => Href("~/Customer/Home/Index?page=" + c))
-</div>
-@section scripts{
+        }
+    </div>
+    <div>
+        @Html.PagedListPager(Model, c => Href("~/Customer/Home/Index?page=" + c))
+    </div>
+    @section scripts{
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/alertify.min.js"></script>
     <script type="text/javascript">
-        $(function(){
+        $(function () {
             var save = '@TempData["save"]'
-            if(save!='') {
+            if (save != '') {
                 alertify.success(save);
             }
             var edit = '@TempData["edit"]'
-            if(edit!='') {
+            if (edit != '') {
                 alertify.success(edit);
             }
             var del = '@TempData["delete"]'
-            if (del!='') {
+            if (del != '') {
                 alertify.error(del);
             }
         })
     </script>
-}
+    }
 
 
 
@@ -67,8 +67,8 @@
 
 
 
-@*Header*@
-@*<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+    @*Header*@
+    @*<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
         <ol class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
             <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -130,8 +130,8 @@
 
 
 
-@*Footer*@
-@*<div class="row">
+    @*Footer*@
+    @*<div class="row">
         <div class="col-md-3">
             <h2>Application uses</h2>
             <ul>

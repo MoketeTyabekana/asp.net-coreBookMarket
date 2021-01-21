@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookMarket.Areas.Customer.Controllers
 {
@@ -31,44 +33,69 @@ namespace BookMarket.Areas.Customer.Controllers
            
             return View();
         }
-        public async Task<IActionResult> Terms()
+
+        public IActionResult Terms()
         {
+
             return View();
         }
 
         [Authorize]
-        public async Task<IActionResult> Apply()
+        public IActionResult  Apply()
         {
+
+           
+            //ViewData["UserId"] = new SelectList(_db.Application.ToList(), "Id");
+
+            //var user = await _userManager.GetUserAsync(User);
+            //if (user == null)
+            //{
+            //    return NotFound();
+            //}
+            //return View(user);
             return View();
+
         }
 
+        //Post Create Method
         [HttpPost]
-        public async Task<IActionResult> Apply(SellApplications application, IFormFile address, IFormFile Id)
+        [ValidateAntiForgeryToken]
+
+
+        public async Task<IActionResult> Apply(SellApplication application, IFormFile ID, IFormFile Address)
         {
-            if (ModelState.IsValid)
-            {
-                if (address != null)
+            SellApplicationDetails applicationDetails = new SellApplicationDetails();
+
+          
+               
+                if (ID != null)
                 {
-                    var name = Path.Combine(_he.WebRootPath + "/files", Path.GetFileName(address.FileName));
-                    await address.CopyToAsync(new FileStream(name, FileMode.Create));
-                    application.ProofOfAddress = "files/" + address.FileName;
+                    var id = Path.Combine(_he.WebRootPath + "/files", Path.GetFileName(ID.FileName));
+                    await ID.CopyToAsync(new FileStream(id, FileMode.Create));
+                    application.ProofId = "files/" + ID.FileName;
                 }
-                //if (Id != null)
-                //{
-                //    var name = Path.Combine(_he.WebRootPath + "/files", Path.GetFileName(Id.FileName));
-                //    await address.CopyToAsync(new FileStream(name, FileMode.Create));
-                //    application.ProofOfID = "files/" + Id.FileName;
-                //}
-                application.UserId = _userManager.GetUserId(User);
-                _db.SellApplications.Add(application);
-                
-                
-                await _db.SaveChangesAsync();
-                TempData["save"] = "Application successfully sent";
-                return Redirect("~/");
-            }
-            return View(application);
+                if (Address != null)
+                {
+                    var address = Path.Combine(_he.WebRootPath + "/files", Path.GetFileName(Address.FileName));
+                    await Address.CopyToAsync(new FileStream(address, FileMode.Create));
+                    application.ProofAddress = "files/" + Address.FileName;
+                }
+            applicationDetails.UserId = _userManager.GetUserId(User);
+            application.Status = "Pending";
+            application.SellApplicationDetails.Add(applicationDetails);
+            
+            _db.SellApplication.Add(application);
+
+            await _db.SaveChangesAsync();
+            TempData["save"] = "Application successfully sent";
+            return Redirect("~/");
+
+
         }
+
+
+
+
 
 
 

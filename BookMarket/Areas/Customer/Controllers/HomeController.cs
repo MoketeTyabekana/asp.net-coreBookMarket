@@ -10,6 +10,10 @@ using Microsoft.EntityFrameworkCore;
 using BookMarket.Utility;
 using X.PagedList;
 using Microsoft.AspNetCore.Http;
+using MimeKit;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using MailKit.Net.Smtp;
 
 namespace BookMarket.Controllers
 {
@@ -17,10 +21,19 @@ namespace BookMarket.Controllers
     
     public class HomeController : Controller
     {
+        
+       
+      
         private ApplicationDbContext _db;
-        public HomeController(ApplicationDbContext db)
+        private  readonly IHostingEnvironment _he;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        public HomeController(ApplicationDbContext db, IHostingEnvironment he, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _db = db;
+            _he = he;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         public IActionResult Index(int? page)
@@ -28,6 +41,7 @@ namespace BookMarket.Controllers
 
             return View(_db.Books.Include(c => c.Categories).Include(c => c.TagName).ToList().ToPagedList(page ?? 1, 9));
         }
+      
 
         public IActionResult About()
         {
@@ -35,8 +49,13 @@ namespace BookMarket.Controllers
 
             return View();
         }
+        public IActionResult Confirm()
+        {
 
-        public IActionResult Contact()
+            return View();
+        }
+
+        public IActionResult Contact(ApplicationUser user ,string Contact)
         {
             ViewData["Message"] = "Your contact page.";
 
